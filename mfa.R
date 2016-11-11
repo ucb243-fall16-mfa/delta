@@ -30,13 +30,8 @@ mfa.raw <- function(tables) {
     ## PCA on the whole table
     X <- do.call(cbind, tables)
     X.svd <- svd(X)
-    eigenvalues <- X.svd$d ^ 2
-    comp.factor.scores <- X.svd$u %*% diag(X.svd$d)
-    loadings <- X.svd$v
 
-    list(eigenvalues = eigenvalues,
-         factor.scores = comp.factor.scores,
-         factor.loadings = loadings,
+    list(svd = X.svd,
          svs = svs
          )
 }
@@ -54,12 +49,12 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     for (i in 1:k) {
         pfscores[[i]] <- k * 1 / raw$svs[i] *
             tables[[i]] %*%
-            raw$factor.loadings[(positions[i] + 1):(positions[i + 1]), 1:ncomp]
+            raw$svd$v[(positions[i] + 1):(positions[i + 1]), 1:ncomp]
     }
     
-    return(list(eigenvalues = raw$eigenvalues[1:ncomp],
-                factor.scores = raw$factor.scores[, 1:ncomp],
-                factor.loadings = raw$factor.loadings[, 1:ncomp],
+    return(list(eig = raw$svd$d[1:ncomp] ^ 2,
+                factor.scores = (raw$svd$u %*% diag(raw$svd$d))[, 1:ncomp],
+                loadings = raw$svd$v[, 1:ncomp],
                 partial.factor.scores = pfscores
                 ))
     
