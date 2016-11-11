@@ -42,7 +42,7 @@ mfa.raw <- function(tables) {
 }
 
 mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
-    data <- scale(data, center, scale)
+    data <- scale(data, center, scale) / sqrt(nrow(data) - 1)
     tables <- split.variables(data, sets)
     raw <- mfa.raw(tables)
 
@@ -52,7 +52,7 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     pfscores <- list()
     k <- length(tables)
     for (i in 1:k) {
-        pfscores[[i]] <- k * raw$weights[[i]] *
+        pfscores[[i]] <- k * sqrt(raw$weights[[i]]) *
             tables[[i]] %*%
             raw$factor.loadings[(positions[i] + 1):(positions[i + 1]), 1:ncomp]
     }
