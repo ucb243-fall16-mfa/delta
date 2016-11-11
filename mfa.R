@@ -18,10 +18,13 @@ split.variables <- function(data, sets) {
 
 ### MFA on normalised tables
 mfa.raw <- function(tables) {
+    weight <- list()
+    
     for (i in 1:length(tables)) {
         ## Normalise each table by the singular values
         sv <- svd(tables[[i]])$d[1]
         tables[[i]] <- tables[[i]] / sv
+        weight[[i]] <- 1 / (sv ^ 2)
     }
 
     ## PCA on the whole table
@@ -33,22 +36,32 @@ mfa.raw <- function(tables) {
 
     list(eigenvalues = eigenvalues,
          factor.scores = comp.factor.scores,
-         factor.loadings = loadings)
+         factor.loadings = loadings,
+         weights = weight
+         )
 }
 
 mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     data <- scale(data, center, scale)
     tables <- split.variables(data, sets)
     raw <- mfa.raw(tables)
+
+    if (is.null(ncomp)) ncomp = ncol(raw$factor.loadings)
     nvar <- vapply(tables, ncol, FUN.VALUE = 0) # num of vars in each table
-
-    if (!is.null(ncomp)) {
-        return(list(eigenvalues = raw$eigenvalues[1:ncomp],
-                    factor.scores = raw$factor.scores[, 1:ncomp],
-                    factor.loadings = raw$factor.loadings[, 1:ncomp]
-                    ))
+    positions <- c(0, cumsum(nvar))
+    pfscores <- list()
+    k <- length(tables)
+    for (i in 1:k) {
+        pfscores[[i]] <- k * raw$weights[[i]] *
+            tables[[i]] %*%
+            raw$factor.loadings[(positions[i] + 1):(positions[i + 1]), 1:ncomp]
     }
-
-    raw
+    
+    return(list(eigenvalues = raw$eigenvalues[1:ncomp],
+                factor.scores = raw$factor.scores[, 1:ncomp],
+                factor.loadings = raw$factor.loadings[, 1:ncomp],
+                partial.factor.scores = pfscores
+                ))
+    
 }
 
