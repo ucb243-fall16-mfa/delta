@@ -18,13 +18,13 @@ split.variables <- function(data, sets) {
 
 ### MFA on normalised tables
 mfa.raw <- function(tables) {
-    weight <- list()
+    svs <- numeric(0)
     
     for (i in 1:length(tables)) {
         ## Normalise each table by the singular values
         sv <- svd(tables[[i]])$d[1]
         tables[[i]] <- tables[[i]] / sv
-        weight[[i]] <- 1 / (sv ^ 2)
+        svs <- c(svs, sv)               # Accumulate a list of singluar values
     }
 
     ## PCA on the whole table
@@ -37,7 +37,7 @@ mfa.raw <- function(tables) {
     list(eigenvalues = eigenvalues,
          factor.scores = comp.factor.scores,
          factor.loadings = loadings,
-         weights = weight
+         svs = svs
          )
 }
 
@@ -52,7 +52,7 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     pfscores <- list()
     k <- length(tables)
     for (i in 1:k) {
-        pfscores[[i]] <- k * sqrt(raw$weights[[i]]) *
+        pfscores[[i]] <- k * 1 / raw$svs[i] *
             tables[[i]] %*%
             raw$factor.loadings[(positions[i] + 1):(positions[i + 1]), 1:ncomp]
     }
