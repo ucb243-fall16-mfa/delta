@@ -37,7 +37,7 @@ mfa.raw <- function(tables) {
 }
 
 mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
-    data <- scale(data, center, scale) / sqrt(nrow(data) - 1)
+    data <- scale(data, center, scale)
     tables <- split.variables(data, sets)
     raw <- mfa.raw(tables)
 
