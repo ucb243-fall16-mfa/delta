@@ -42,6 +42,8 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     raw <- mfa.raw(tables)
 
     if (is.null(ncomp)) ncomp = ncol(raw$factor.loadings)
+
+    ## Compute the partial factor scores
     nvar <- vapply(tables, ncol, FUN.VALUE = 0) # num of vars in each table
     positions <- c(0, cumsum(nvar))
     pfscores <- list()
@@ -51,10 +53,14 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
             tables[[i]] %*%
             raw$svd$v[(positions[i] + 1):(positions[i + 1]), 1:ncomp]
     }
+
+    ## Compute the factor loadings
+    svec <- unlist(Map(function(sv, times) rep(sv, times), raw$svs, nvar))
+    loadings <- diag(svec) %*% raw$svd$v[, 1:ncomp]
     
     return(list(eig = raw$svd$d[1:ncomp] ^ 2,
                 factor.scores = (raw$svd$u %*% diag(raw$svd$d))[, 1:ncomp],
-                loadings = raw$svd$v[, 1:ncomp],
+                loadings = loadings,
                 partial.factor.scores = pfscores
                 ))
     
