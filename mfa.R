@@ -41,7 +41,7 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     tables <- split.variables(data, sets)
     raw <- mfa.raw(tables)
 
-    if (is.null(ncomp)) ncomp = ncol(raw$factor.loadings)
+    if (is.null(ncomp)) ncomp = length(raw$svd$d)
 
     ## Compute the partial factor scores
     nvar <- vapply(tables, ncol, FUN.VALUE = 0) # num of vars in each table
