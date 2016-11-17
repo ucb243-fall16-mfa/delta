@@ -37,7 +37,7 @@ mfa.raw <- function(tables) {
 }
 
 mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
-    data <- scale(data, center, scale)
+    data <- scale(data, center, scale) / sqrt(nrow(data) - 1)
     tables <- split.variables(data, sets)
     raw <- mfa.raw(tables)
 
@@ -58,7 +58,7 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     svec <- unlist(Map(function(sv, times) rep(sv, times), raw$svs, nvar))
     loadings <- diag(svec) %*% raw$svd$v[, 1:ncomp]
     
-    return(list(eig = raw$svd$d[1:ncomp] ^ 2,
+    return(list(eig = raw$svd$d[1:ncomp] ^ 2 / nrow(data),
                 factor.scores = (raw$svd$u %*% diag(raw$svd$d))[, 1:ncomp],
                 loadings = loadings,
                 partial.factor.scores = pfscores
