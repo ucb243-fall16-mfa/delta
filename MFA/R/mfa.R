@@ -2,7 +2,7 @@
 SplitTable <- function(data, sets) {
     tables <- list()
     for (i in 1:length(sets)) {
-        tables[[i]] <- data[, sets[[i]]]
+        tables[[i]] <- data[, sets[[i]], drop = FALSE]
     }
 
     if (!is.null(names(sets)))
