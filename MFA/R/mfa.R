@@ -1,5 +1,5 @@
 ### Create a list of matrices from the 'sets' variable
-split.variables <- function(data, sets) {
+SplitTable <- function(data, sets) {
     tables <- list()
     for (i in 1:length(sets)) {
         tables[[i]] <- data[, sets[[i]]]
@@ -11,7 +11,7 @@ split.variables <- function(data, sets) {
 }
 
 ### MFA on normalised tables
-mfa.raw <- function(tables) {
+NormalizeAndSVD <- function(tables) {
     svs <- numeric(0)
     
     for (i in 1:length(tables)) {
@@ -26,8 +26,7 @@ mfa.raw <- function(tables) {
     X.svd <- svd(X)
 
     list(svd = X.svd,
-         svs = svs
-         )
+         svs = svs)
 }
 
 #' Multiple factor analysis on a data frame or matrix.
@@ -47,8 +46,8 @@ mfa.raw <- function(tables) {
 #' @export
 mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     data <- scale(data, center, scale) / sqrt(nrow(data) - 1)
-    tables <- split.variables(data, sets)
-    raw <- mfa.raw(tables)
+    tables <- SplitTable(data, sets)
+    raw <- NormalizeAndSVD(tables)
 
     if (is.null(ncomp)) ncomp = length(raw$svd$d)
 
