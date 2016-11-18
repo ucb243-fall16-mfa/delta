@@ -2,3 +2,8 @@
 \#*\#
 .\#*
 *~
+.Rproj.user/
+.Rhistory
+DESCRIPTION
+NAMESPACE
+man/

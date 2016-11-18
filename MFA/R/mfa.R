@@ -1,9 +1,3 @@
-### Import the data needed for testing
-wines <- read.csv('wines.csv')
-wines <- wines[, 2:(ncol(wines) - 4)]   # Get rid of the last 4 columns
-g <- c(6, 6, 6, 5, 6, 5, 4, 6, 5, 4)
-sets <- list(1:6, 7:12, 13:18, 19:23, 24:29, 30:34, 35:38, 39:44, 45:49, 50:53)
-
 ### Create a list of matrices from the 'sets' variable
 split.variables <- function(data, sets) {
     tables <- list()
@@ -36,6 +30,21 @@ mfa.raw <- function(tables) {
          )
 }
 
+#' Multiple factor analysis on a data frame or matrix.
+#'
+#' @param data the data set, a data frame or matrix
+#' @param sets a list of numeric or character vectors indicating the sets of
+#'     variables
+#' @param ncomps integer indicating how many number of components
+#'     (i.e. factors) are to be extracted
+#' @param center either a logical value or a numeric vector of length
+#'     equal to the number of active variables in the analysis
+#' @param scale either a logical value or a numeric vector of length
+#'     equal to the number of active variables in the analysis
+#' @return an object of class "mfa", containing eigenvalues, factor
+#'     scores, partial factor scores, and factor loadings.
+#' 
+#' @export
 mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     data <- scale(data, center, scale) / sqrt(nrow(data) - 1)
     tables <- split.variables(data, sets)
@@ -65,4 +74,3 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
                 ))
     
 }
-
