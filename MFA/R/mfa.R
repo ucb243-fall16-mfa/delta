@@ -11,22 +11,30 @@ SplitTable <- function(data, sets) {
 }
 
 ### MFA on normalised tables
-NormalizeAndSVD <- function(tables) {
+NormalizeAndGSVD <- function(tables) {
     svs <- numeric(0)
     
     for (i in 1:length(tables)) {
-        ## Normalise each table by the singular values
+        ## Accumulate a list of singluar values
         sv <- svd(tables[[i]])$d[1]
-        tables[[i]] <- tables[[i]] / sv
-        svs <- c(svs, sv)               # Accumulate a list of singluar values
+        svs <- c(svs, rep(sv, ncol(tables[[i]])))
     }
 
-    ## PCA on the whole table
+    ## Obtain the matrices needed for GSVD
+    n <- nrow(tables[[1]])
+    m <- rep(1 / n, n)
+    a <- svs ^ (-2)
     X <- do.call(cbind, tables)
-    X.svd <- svd(X)
+    X.tilde <- diag(sqrt(m)) %*% X %*% diag(sqrt(a))
+    X.tilde.svd <- svd(X.tilde)
+    P <- diag(1 / sqrt(m)) %*% X.tilde.svd$u
+    d <- X.tilde.svd$d
+    Q <- diag(1 / sqrt(a)) %*% X.tilde.svd$v
 
-    list(svd = X.svd,
-         svs = svs)
+    list(P = P,
+         d = d,
+         Q = Q,
+         a = a)
 }
 
 #' Multiple factor analysis on a data frame or matrix.
@@ -47,9 +55,9 @@ NormalizeAndSVD <- function(tables) {
 mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     data <- scale(data, center, scale) / sqrt(nrow(data) - 1)
     tables <- SplitTable(data, sets)
-    raw <- NormalizeAndSVD(tables)
+    gsvd <- NormalizeAndGSVD(tables)
 
-    if (is.null(ncomp)) ncomp = length(raw$svd$d)
+    if (is.null(ncomp)) ncomp = length(gsvd$d)
 
     ## Compute the partial factor scores
     nvar <- vapply(tables, ncol, FUN.VALUE = 0) # num of vars in each table
@@ -57,19 +65,16 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     pfscores <- list()
     k <- length(tables)
     for (i in 1:k) {
-        pfscores[[i]] <- k * 1 / raw$svs[i] *
+        pfscores[[i]] <- k * gsvd$a[i] *
             tables[[i]] %*%
-            raw$svd$v[(positions[i] + 1):(positions[i + 1]), 1:ncomp]
+            gsvd$Q[(positions[i] + 1):(positions[i + 1]), 1:ncomp]
     }
-
-    ## Compute the factor loadings
-    svec <- unlist(Map(function(sv, times) rep(sv, times), raw$svs, nvar))
-    loadings <- diag(svec) %*% raw$svd$v[, 1:ncomp]
     
-    return(list(eig = raw$svd$d[1:ncomp] ^ 2 / nrow(data),
-                factor.scores = (raw$svd$u %*% diag(raw$svd$d))[, 1:ncomp],
-                loadings = loadings,
-                partial.factor.scores = pfscores
+    return(list(eig = gsvd$d ^ 2,
+                factor.scores = gsvd$P %*% diag(gsvd$d),
+                loadings = gsvd$Q,
+                partial.factor.scores = pfscores,
+                weights = gsvd$a
                 ))
     
 }
