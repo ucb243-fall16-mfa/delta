@@ -1,5 +1,8 @@
 tr <- function(m) sum(diag(m))
 
+#' @title RV coefficient
+#' @param table1 a data frame or matrix
+#' @param table2 a data frame or matrix
 #' @export
 RV <- function(table1, table2) {
     table1 <- data.matrix(table1)
@@ -9,6 +12,10 @@ RV <- function(table1, table2) {
              tr(tcrossprod(table2) %*% tcrossprod(table2)))
 }
 
+#' @title RV coefficient of subsets of a table
+#' @param sets a list of numeric or character vectors indicating the sets of
+#'     variables
+#' @return a symmetric matrix containing the RV coefficients
 #' @export
 RV_table <- function(data, sets) {
     tables <- SplitTable(data, sets)
