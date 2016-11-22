@@ -17,7 +17,7 @@ ContribObs <- function(mfa) {
 #' 
 #' @export
 ContribVar <- function(mfa)
-  t(mfa$loadings ^ 2) %*% diag(mfa$weights)
+  diag(mfa$weights) %*% mfa$loadings ^ 2
 
 #' The contributions of a Table to a Dimension for a given mfa object.
 #'
@@ -37,10 +37,10 @@ ContribTable <- function(mfa) {
   
   ## Compute the Contributions of a Table
   tables <- list()
-  ctr.var <- ContribVar(mfa)
+  ctr.var <- t(ContribVar(mfa))
   for (i in 1:length(sets)) {
     tables[[i]] <- ctr.var[, sets[[i]]]
     tables[[i]] <- apply(tables[[i]], FUN = sum, MARGIN = 1)
   }
-  return(do.call(cbind, tables))
+  return(t(do.call(cbind, tables)))
 }
