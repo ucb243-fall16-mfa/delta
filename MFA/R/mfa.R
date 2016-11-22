@@ -57,7 +57,7 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     tables <- SplitTable(data, sets)
     gsvd <- NormalizeAndGSVD(tables)
 
-    if (is.null(ncomp)) ncomp = length(gsvd$d)
+    if (is.null(ncomp) || ncomp > length(gsvd$d)) ncomp = length(gsvd$d)
 
     ## Compute the partial factor scores
     nvar <- vapply(tables, ncol, FUN.VALUE = 0) # num of vars in each table
@@ -70,11 +70,15 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
             gsvd$Q[(positions[i] + 1):(positions[i + 1]), 1:ncomp]
     }
     
-    return(list(eig = gsvd$d ^ 2,
-                factor.scores = gsvd$P %*% diag(gsvd$d),
-                loadings = gsvd$Q,
+    return(
+        structure(
+            list(eig = (gsvd$d ^ 2)[1:ncomp],
+                factor.scores = (gsvd$P %*% diag(gsvd$d))[ , 1:ncomp],
+                loadings = (gsvd$Q)[, 1:ncomp],
                 partial.factor.scores = pfscores,
                 weights = gsvd$a
-                ))
-    
+                ),
+            class = "mfa"
+        )
+    )
 }
