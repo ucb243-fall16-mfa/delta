@@ -70,11 +70,15 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
             gsvd$Q[(positions[i] + 1):(positions[i + 1]), 1:ncomp]
     }
     
-    return(list(eig = gsvd$d ^ 2,
+    return(
+        structure(
+            list(eig = gsvd$d ^ 2,
                 factor.scores = gsvd$P %*% diag(gsvd$d),
                 loadings = gsvd$Q,
                 partial.factor.scores = pfscores,
                 weights = gsvd$a
-                ))
-    
+                ),
+            class = "mfa"
+        )
+    )
 }
