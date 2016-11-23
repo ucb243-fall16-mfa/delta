@@ -1,7 +1,9 @@
 #' The contributions of an Observation to a Dimension for a given mfa object.
 #'
 #' @param mfa Object of class 'mfa', which should be output from mfa function.
-#' @return A matrix of the contributions of each Observation to each Dimension.
+#' @return A matrix of the contributions of each Observation to each
+#'     Dimension, with rows corresponding to Observations, and columns
+#'     corresponding to Dimensions.
 #' 
 #' @export
 ContribObs <- function(mfa) {
@@ -13,7 +15,9 @@ ContribObs <- function(mfa) {
 #' The contributions of a Variable to a Dimension for a given mfa object.
 #'
 #' @param mfa Object of class 'mfa', which should be output from mfa function.
-#' @return A matrix of the contributions of each Variable to each Dimension.
+#' @return A matrix of the contributions of each Variable to each
+#'     Dimension, with rows corresponding to Variables, and columns
+#'     corresponding to Dimensions.
 #' 
 #' @export
 ContribVar <- function(mfa)
@@ -22,7 +26,9 @@ ContribVar <- function(mfa)
 #' The contributions of a Table to a Dimension for a given mfa object.
 #'
 #' @param mfa Object of class 'mfa', which should be output from mfa function.
-#' @return A matrix of the contributions of each Table to each Dimension.
+#' @return A matrix of the contributions of each Table to each
+#'     Dimension, with rows corresponding to Tables, and columns
+#'     corresponding to Dimensions.
 #' 
 #' @export
 ContribTable <- function(mfa) {
