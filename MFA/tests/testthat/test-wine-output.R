@@ -1,6 +1,13 @@
-context("output from functions for wines match expected output")
+context("mfa and contributions functions output with wines dataset")
 
-test_that("Factor Scores from mfa function matches expected", {
+### Import the data needed for testing
+wines <- read.csv('../../../wines.csv')
+wines <- wines[, 2:(ncol(wines) - 4)]   # Get rid of the last 4 columns
+g <- c(6, 6, 6, 5, 6, 5, 4, 6, 5, 4)
+sets <- list(1:6, 7:12, 13:18, 19:23, 24:29, 30:34, 35:38, 39:44, 45:49, 50:53)
+mfa.wines <- mfa(wines, sets)
+
+test_that("Factor Scores from mfa function", {
   Factor.Scores=t(matrix(c(-0.980, 0.163, -0.809, 0.033, -0.761, -0.454, -1.115,
                             -0.166, 1.373, -0.128,1.264, -0.108, 0.808, 0.205,
                             0.925, 0.408, -0.669, 0.369, 0.073, -0.757, -0.476,
@@ -8,7 +15,7 @@ test_that("Factor Scores from mfa function matches expected", {
   expect_that(mfa.wines$factor.scores[,1:2], equals(Factor.Scores, tolerance = 1e-3))
 })
 
-test_that("Partial Factor Scores from mfa function matches expected", {
+test_that("Partial Factor Scores from mfa function", {
   Partial.Factor.Score = t(matrix(c(-1.037, 0.155, -1.179, 0.596, -0.213, -0.104,
                                      -0.946, 0.446, 1.546, -0.676, 1.176, -0.747,
                                      0.698, 0.166, 1.006, -0.063, -0.922, 0.486, 
@@ -18,13 +25,13 @@ test_that("Partial Factor Scores from mfa function matches expected", {
               equals(Partial.Factor.Score, tolerance = 1e-3))
 })
 
-test_that("Eigenvalues from mfa function match expected eigenvalues", {
+test_that("Eigenvalues from mfa function", {
   eigen = c(0.770, 0.123, 0.091, 0.076, 0.060, 0.039, 0.031, 0.025, 0.019, 0.013, 0.011)
   expect_that(mfa.wines$eig[1:11], equals(eigen, tolerance = 1e-3))
 })
 
 
-test_that("Loadings from mfa function match expected Loadings", {
+test_that("Loadings from mfa function", {
   Loadings = matrix(c(-0.294, -0.267, -0.260, 0.241, 0.286, -0.233, -0.297, -0.296,
                        -0.267, 0.256, -0.238, -0.222, -0.305, -0.136, -0.258, 0.203,
                        -0.277, 0.267, -0.313, -0.261, -0.303, 0.230, -0.205, -0.296,
@@ -42,13 +49,13 @@ test_that("Loadings from mfa function match expected Loadings", {
   expect_that(mfa.wines$loadings[,1:2], equals(Loadings, tolerance = 1e-3))
 })
 
-test_that("weights from mfa function matches expected weights", {
+test_that("weights from mfa function", {
   weights = c(0.241, 0.239, 0.275, 0.273, 0.307, 
               0.302, 0.417, 0.272, 0.264, 0.309)
   expect_that(unique(mfa.wines$weights), equals(weights, tolerance = 1e-3))
 })
 
-test_that("Output from ContribTable matches expected output", {
+test_that("Output from ContribTable", {
   Table.Contributions = t(matrix(c(0.101, 0.095, 0.100, 0.068, 0.101, 0.152, 
                                    0.096, 0.049, 0.098, 0.063, 0.101, 0.104, 0.102, 
                                    0.224, 0.096, 0.134, 0.100, 0.053, 0.105, 0.057),
@@ -56,7 +63,7 @@ test_that("Output from ContribTable matches expected output", {
   expect_that(ContribTable(mfa.wines)[,1:2], equals(Table.Contributions, tolerance = 1e-3))
 })
 
-test_that("Output from ContribVar matches expected output", {
+test_that("Output from ContribVar", {
   Var.Contributions <- matrix(c(21, 17, 16, 14, 20, 13, 21, 21, 17, 16, 14, 12, 26,
                                 5, 18, 11, 21, 20,27, 19, 25, 14, 12, 27, 14, 22,
                                 5, 20, 10, 28, 23, 21, 16, 13, 31, 25, 32, 14, 21,
