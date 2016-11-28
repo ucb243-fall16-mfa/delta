@@ -13,17 +13,20 @@ SplitTable <- function(data, sets) {
 ### MFA on normalised tables
 NormalizeAndGSVD <- function(tables) {
     svs <- numeric(0)
+    uniq.svs <- numeric(0)
     
     for (i in 1:length(tables)) {
         ## Accumulate a list of singluar values
         sv <- svd(tables[[i]])$d[1]
         svs <- c(svs, rep(sv, ncol(tables[[i]])))
+        uniq.svs <- c(uniq.svs, sv)
     }
 
     ## Obtain the matrices needed for GSVD
     n <- nrow(tables[[1]])
     m <- rep(1 / n, n)
     a <- svs ^ (-2)
+    uniq.a <- uniq.svs ^ (-2)
     X <- do.call(cbind, tables)
     X.tilde <- diag(sqrt(m)) %*% X %*% diag(sqrt(a))
     X.tilde.svd <- svd(X.tilde)
@@ -34,7 +37,8 @@ NormalizeAndGSVD <- function(tables) {
     list(P = P,
          d = d,
          Q = Q,
-         a = a)
+         a = a,
+         uniq.a = uniq.a)
 }
 
 #' Multiple factor analysis on a data frame or matrix.
@@ -65,7 +69,7 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     pfscores <- list()
     k <- length(tables)
     for (i in 1:k) {
-        pfscores[[i]] <- k * gsvd$a[i] *
+        pfscores[[i]] <- k * gsvd$uniq.a[i] *
             tables[[i]] %*%
             gsvd$Q[(positions[i] + 1):(positions[i + 1]), 1:ncomp]
     }
