@@ -1,0 +1,18 @@
+---
+title: "Performing MFA"
+author: "Jingcheng Xu"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Basic information about performing MFA on datasets: mfa() function and it's usage.
+
+Auxillary functions: summary, plot.
+
+Related funcitons: RV, Lg, bootstrap, etc.
+
+
