@@ -2,6 +2,8 @@ context("mfa object class and dimensions")
 
 ncomp <- 5
 test.wines <- mfa(wines, sets, ncomp = ncomp)
+var.indices <- unlist(sets)
+wines.data <- wines[,var.indices]
 
 test_that("mfa function returns mfa object", {
   expect_that(test.wines, is_a("mfa"))
@@ -28,10 +30,10 @@ test_that("dimensons of partial factor scores matrix",{
 
 test_that("dimension of loadings matrix",{
   expect_that(test.wines$loadings, is_a("matrix"))
-  expect_that(dim(test.wines$loadings), equals(c(ncol(wines), ncomp)))
+  expect_that(dim(test.wines$loadings), equals(c(ncol(wines.data), ncomp)))
 })
 
 test_that("proper number of weights",{
   expect_that(test.wines$weights, is_a("numeric"))
-  expect_that(length(test.wines$weights), equals(ncol(wines)))
+  expect_that(length(test.wines$weights), equals(ncol(wines.data)))
 })
