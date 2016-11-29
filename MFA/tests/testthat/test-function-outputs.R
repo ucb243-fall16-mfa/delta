@@ -3,8 +3,10 @@ context("mfa and contribution properties")
 mfa.wines <- mfa(wines, sets)
 
 test_that("Original Data can be obtained from Factor Scores and Loadings",{
+  var.indeces <- unlist(sets)
+  scaled.wines <- scale(wines[ , var.indeces]) / sqrt(nrow(wines) - 1)
   expect_that(mfa.wines$factor.scores %*% t(mfa.wines$loadings),
-              is_equivalent_to(scale(wines) / sqrt(nrow(mfa.wines$factor.scores) - 1)))
+              is_equivalent_to(scaled.wines))
 })
 
 test_that("Loadings and Weights can be used to get the identity matrix",{
