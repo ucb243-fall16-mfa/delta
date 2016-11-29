@@ -7,6 +7,8 @@
 RV_table(data, sets)
 }
 \arguments{
+\item{data}{a data frame or matrix}
+
 \item{sets}{a list of numeric or character vectors indicating the sets of
 variables}
 }

@@ -11,4 +11,7 @@ RV(table1, table2)
 
 \item{table2}{a data frame or matrix}
 }
+\value{
+the RV coefficient
+}
 

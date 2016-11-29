@@ -23,7 +23,8 @@ equal to the number of active variables in the analysis}
 }
 \value{
 an object of class "mfa", containing eigenvalues, factor
-    scores, partial factor scores, and factor loadings.
+    scores, partial factor scores, factor loadings, and other data
+    (e.g. weights) for related functions.
 }
 \description{
 Multiple factor analysis on a data frame or matrix.
