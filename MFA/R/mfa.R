@@ -1,12 +1,9 @@
-### Create a list of matrices from the 'sets' variable
+### Create a list of *matrices* from the 'sets' variable
 SplitTable <- function(data, sets) {
     tables <- list()
     for (i in 1:length(sets)) {
-        tables[[i]] <- data[, sets[[i]], drop = FALSE]
+        tables[[i]] <- data.matrix(data[, sets[[i]], drop = FALSE])
     }
-
-    if (!is.null(names(sets)))
-        names(tables) <- names(sets)
     tables
 }
 
@@ -57,7 +54,9 @@ NormalizeAndGSVD <- function(tables) {
 #' 
 #' @export
 mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
-    data <- scale(data, center, scale) / sqrt(nrow(data) - 1)
+    var.indeces <- unlist(sets)
+    data[ , var.indeces] <-
+        scale(data[ , var.indeces], center, scale) / sqrt(nrow(data) - 1)
     tables <- SplitTable(data, sets)
     gsvd <- NormalizeAndGSVD(tables)
 
