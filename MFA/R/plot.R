@@ -1,8 +1,9 @@
 #' @import ggplot2
-PlotRawFactorScores <- function(fs, group, dim, title) {
-    if (!is.null(group)) fs <- cbind(fs, group)
+PlotHelper <- function(data, group, xlab, ylab, title) {
+    data <- data.frame(data)
+    if (!is.null(group)) data <- cbind(data, group)
 
-    plot <- ggplot(data = fs) +
+    plot <- ggplot(data = data) +
         labs(x = 'Dimension 1',
              y = 'Dimension 2',
              title = title) +
@@ -15,6 +16,11 @@ PlotRawFactorScores <- function(fs, group, dim, title) {
     else
         plot <- plot + geom_point(aes(x = X1, y = X2))
     plot
+}
+
+PlotRawFactorScores <- function(fs, group, title) {
+    PlotHelper(fs, group,
+               'Dimension 1', 'Dimension 2', title)
 }
 
 CheckArg <- function(mfa, dim) {
@@ -31,8 +37,8 @@ CheckArg <- function(mfa, dim) {
 #' @export
 PlotFactorScores <- function(mfa, group = NULL, dim = c(1, 2)) {
     CheckArg(mfa, dim)
-    fs <- data.frame(mfa$factor.scores[ , dim])
-    PlotRawFactorScores(fs, group, dim, 'Factor Scores')
+    fs <- mfa$factor.scores[ , dim]
+    PlotRawFactorScores(fs, group, 'Factor Scores')
 }
 
 #' @title Plot Partial Factor Scores
@@ -46,8 +52,22 @@ PlotFactorScores <- function(mfa, group = NULL, dim = c(1, 2)) {
 PlotPartialFactorScores <- function(mfa, k,
                                    group = NULL, dim = c(1, 2)) {
     CheckArg(mfa, dim)
-    fs <- data.frame(mfa$partial.factor.scores[[k]][ , dim])
+    fs <- mfa$partial.factor.scores[[k]][ , dim]
     title <- paste('Partial factor scores of table', k)
-    PlotRawFactorScores(fs, group, dim, title)
+    PlotRawFactorScores(fs, group, title)
 }
 
+#' @title Plot Variable Loadings
+#' @param mfa an object of class "mfa"
+#' @param var.group a factor vector, indicating which group each row
+#'     (variable) belongs to
+#' @param dim a integer vector indicating the dimensions to plot, the
+#'     first element being x and second being y
+#' @export
+PlotLoadings <- function(mfa, var.group = NULL, dim = c(1, 2)) {
+    CheckArg(mfa, dim)
+    ld <- mfa$loadings
+    PlotHelper(ld, var.group,
+               'Dimension 1', 'Dimension 2',
+               'Variable Loadings')
+}
