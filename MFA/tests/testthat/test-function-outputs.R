@@ -42,3 +42,9 @@ test_that("Sum of contributions by the dimensions gives 1",{
   expect_that(apply(ctr.var, MARGIN = 2, FUN = sum), equals(rep(1, ncol(ctr.var))))
   expect_that(apply(ctr.table, MARGIN = 2, FUN = sum), equals(rep(1, ncol(ctr.table))))
 })
+
+test_that("Diagonal of RV Table is one",{
+  RV.table <- RV_table(wines, sets)
+  expect_that(apply(RV.table, MARGIN = 2, FUN = max), equals(rep(1, nrow(RV.table))))
+  expect_that(diag(RV.table), equals(rep(1, nrow(RV.table))))
+})
