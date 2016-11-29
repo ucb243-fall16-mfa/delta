@@ -1,3 +1,9 @@
+#' @title Plot Factor Score
+#' @param mfa an object of class "mfa"
+#' @param group a factor vector, indicating which group each row
+#'     belongs to
+#' @param dim a integer vector indicating the dimensions to plot, the
+#'     first element being x and second being y
 #' @import ggplot2
 #' @export
 PlotFactorScore <- function(mfa, group = NULL, dim = c(1, 2)) {
