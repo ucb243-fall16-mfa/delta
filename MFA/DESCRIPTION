@@ -8,3 +8,4 @@ Description: Multiple factor analysis and plot related to it.
 License: MIT
 LazyData: TRUE
 RoxygenNote: 5.0.1
+Imports: ggplot2
