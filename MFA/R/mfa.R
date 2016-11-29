@@ -50,7 +50,8 @@ NormalizeAndGSVD <- function(tables) {
 #' @param scale either a logical value or a numeric vector of length
 #'     equal to the number of active variables in the analysis
 #' @return an object of class "mfa", containing eigenvalues, factor
-#'     scores, partial factor scores, and factor loadings.
+#'     scores, partial factor scores, factor loadings, and other data
+#'     (e.g. weights) for related functions.
 #' 
 #' @export
 mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
