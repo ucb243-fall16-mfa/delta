@@ -1,5 +1,8 @@
 #ui.R for shiny app for wine data
 library(shiny)
+library(MFA)
+
+mfa.wines <- mfa(wines, sets)
 
 shinyUI(fluidPage(
 
