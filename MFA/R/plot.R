@@ -74,7 +74,7 @@ PlotPartialFactorScores <- function(mfa, k,
 #' @export
 PlotLoadings <- function(mfa, var.group = NULL, label = NULL, dim = c(1, 2)) {
     CheckArg(mfa, dim)
-    ld <- mfa$loadings
+    ld <- mfa$loadings[ , dim]
     PlotHelper(ld, var.group,
                'Dimension 1', 'Dimension 2',
                'Variable Loadings',
