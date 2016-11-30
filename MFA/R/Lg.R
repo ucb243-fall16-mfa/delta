@@ -16,7 +16,7 @@ Lg <- function(table1, table2) {
 #'     variables
 #' @return a symmetric matrix containing the Lg coefficients
 #' @export
-LgTable <- function(data, sets) {
+Lg_table <- function(data, sets) {
   tables <- SplitTable(data, sets)
   n <- length(sets)
   result <- matrix(nrow = n, ncol = n)
