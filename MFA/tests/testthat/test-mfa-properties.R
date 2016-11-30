@@ -11,7 +11,7 @@ test_that("mfa function returns mfa object", {
 
 test_that("proper number of eigenvalues",{
   expect_that(test.wines$eig, is_a("numeric"))
-  expect_that(length(test.wines$eig), equals(ncomp))
+  expect_that(length(test.wines$eig), equals(nrow(wines)))
 })
 
 test_that("dimensions of factor scores matrix",{
