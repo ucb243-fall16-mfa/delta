@@ -4,7 +4,7 @@
 \alias{PlotPartialFactorScores}
 \title{Plot Partial Factor Scores}
 \usage{
-PlotPartialFactorScores(mfa, k, group = NULL, dim = c(1, 2))
+PlotPartialFactorScores(mfa, k, group = NULL, label = NULL, dim = c(1, 2))
 }
 \arguments{
 \item{mfa}{an object of class "mfa"}
@@ -13,6 +13,9 @@ PlotPartialFactorScores(mfa, k, group = NULL, dim = c(1, 2))
 
 \item{group}{a factor vector, indicating which group each row
 belongs to}
+
+\item{label}{a character vector, will be used to plot the points,
+default to row numbers when NULL}
 
 \item{dim}{a integer vector indicating the dimensions to plot, the
 first element being x and second being y}

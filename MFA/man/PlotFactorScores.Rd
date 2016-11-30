@@ -4,13 +4,16 @@
 \alias{PlotFactorScores}
 \title{Plot Factor Score}
 \usage{
-PlotFactorScores(mfa, group = NULL, dim = c(1, 2))
+PlotFactorScores(mfa, group = NULL, label = NULL, dim = c(1, 2))
 }
 \arguments{
 \item{mfa}{an object of class "mfa"}
 
 \item{group}{a factor vector, indicating which group each row
 belongs to}
+
+\item{label}{a character vector, will be used to plot the points,
+default to row numbers when NULL}
 
 \item{dim}{a integer vector indicating the dimensions to plot, the
 first element being x and second being y}
