@@ -1,8 +1,5 @@
 #ui.R for shiny app for wine data
 library(shiny)
-library(MFA)
-
-mfa.wines <- mfa(wines, sets)
 
 shinyUI(fluidPage(
 
@@ -21,14 +18,14 @@ shinyUI(fluidPage(
       ##Inputs for which Dimensions to be used
       numericInput("dim1",
                    label = "Dimension 1",
-                   value = 1, min=1, max=length(mfa.wines$eig)),
+                   value = 1, min=1, max=12),
       numericInput("dim2",
                    label = "Dimension 2",
-                   value = 2, min=1, max=length(mfa.wines$eig))
+                   value = 2, min=1, max=12)
     )),
     #Conditional Panel to choose the table if partial factor Plot is chosen.
     conditionalPanel("input.Choice == 'partial'",
                      numericInput("table", label="Table",
-                                  value=1, min=1, max = length(mfa.wines$partial.factor.scores))
+                                  value=1, min=1, max = 10)
     )
   ))
