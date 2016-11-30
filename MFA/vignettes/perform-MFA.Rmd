@@ -4,7 +4,7 @@ author: "Jingcheng Xu"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Performing MFA}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -39,7 +39,25 @@ PlotPartialFactorScores(result, 1, group = wines$country, label = wines$ID,
                         dim = c(2, 3))
 PlotLoadings(result)
 ```
+The `PlotFactorScores` function plot the factor scores of the result
+from MFA. The argument `group` can be used to provide grouping
+(different colouring) on the plot.
 
-Related funcitons: RV, Lg, bootstrap, etc.
+The `PlotPartialFactorScores` function is similar, only requiring one
+more argument to specify the particular table.
 
+The `PlotLoadings` function plots the variable loadings. Similar to
+the other two functions, `var.group` argument can be used to provide
+grouping among variables.
 
+## Related functions
+### Contributions
+...
+
+### Bootstrap
+The package also included a function `BootstrapRatios` for computing
+the bootstrap ratios, which can be used to find observations that
+reliably contribute to a given component.
+```{r}
+BootstrapRatios(result, times = 2000)
+```
