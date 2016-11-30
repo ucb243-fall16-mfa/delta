@@ -1,5 +1,5 @@
 #' @import ggplot2
-PlotHelper <- function(data, group, xlab, ylab, title, label) {
+PlotHelper <- function(data, group, xlab, ylab, title, label, fix.ratio = TRUE) {
     data <- data.frame(data)
     if (!is.null(group)) data <- cbind(data, group)
 
@@ -8,9 +8,10 @@ PlotHelper <- function(data, group, xlab, ylab, title, label) {
         labs(x = 'Dimension 1',
              y = 'Dimension 2',
              title = title) +
-        coord_fixed(1) +
         geom_hline(yintercept = 0) +
         geom_vline(xintercept = 0)
+
+    if (fix.ratio) plot <- plot + coord_fixed(1) 
 
     if (!is.null(group))
         plot <- plot + geom_text(aes(colour = group))
@@ -78,5 +79,6 @@ PlotLoadings <- function(mfa, var.group = NULL, label = NULL, dim = c(1, 2)) {
     PlotHelper(ld, var.group,
                'Dimension 1', 'Dimension 2',
                'Variable Loadings',
-               label)
+               label,
+               fix.ratio = FALSE)
 }
