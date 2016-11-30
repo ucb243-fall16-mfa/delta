@@ -78,7 +78,7 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     
     return(
         structure(
-            list(eig = (gsvd$d ^ 2)[1:ncomp],
+            list(eig = (gsvd$d ^ 2),
                 factor.scores = (gsvd$P %*% diag(gsvd$d))[ , 1:ncomp],
                 loadings = (gsvd$Q)[, 1:ncomp],
                 partial.factor.scores = pfscores,
