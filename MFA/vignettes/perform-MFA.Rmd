@@ -96,7 +96,8 @@ There are 10 assessors (tables), so we get a sense of how much a table contribut
 ### Bootstrap
 The package also included a function `BootstrapRatios` for computing
 the bootstrap ratios, which can be used to find observations that
-reliably contribute to a given component.
+reliably contribute to a given component. Here the ratios are computed
+by dividing each bootstrap mean by its standard deviation.
 ```{r}
 BootstrapRatios(result, times = 2000)
 ```
