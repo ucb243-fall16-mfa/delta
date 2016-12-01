@@ -66,9 +66,7 @@ With our wine data, each observation is a different wine, each table corresponds
 
 The contributions of an observation tells us how much each observation contributes to a dimension.  To get the Contributions of an Observation, use the `ContribObs` function.  The output given will have the columns represent dimensions and the rows represent observations.  Using the wine data as an example:
 ```{r}
-library(MFA)
-mfa.wines <- mfa(wines, sets)
-ctr.obs <- ContribObs(mfa.wines)
+ctr.obs <- ContribObs(result)
 ctr.obs[,1:3]
 ```
 
@@ -78,7 +76,7 @@ Since we have 12 wines (observations), we get a sense of how much an observation
 
 The contributions of a variable tells us how much each variable contributes to a dimension.  To get the Contributions of a Variable, use the `ContribVar` function. The output has columns representing dimensions and rows representing variables.  With the wine data as an example:
 ```{r}
-ctr.var <- ContribVar(mfa.wines)
+ctr.var <- ContribVar(result)
 ctr.var[1:8, 1:3]
 ```
 
@@ -88,7 +86,7 @@ We have 53 variables, so we get a sense of how much a variable contributes by it
 
 The contribution of a table to tells us how much all of the variables in a given table contribute to a dimension.  To get the Contributions of a Table, use the `ContribTable` function. The output has columns representing dimensions and rows representing Tables.  With the wine data as an example:
 ```{r}
-ctr.table <- ContribTable(mfa.wines)
+ctr.table <- ContribTable(result)
 ctr.table[, 1:3]
 ```
 
