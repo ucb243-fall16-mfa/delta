@@ -12,15 +12,15 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Multiple Factor Analysis
 
 MFA is used when several sets of variables have been measured on the same set of observations.
-The number and/or nature of the variables used to describe the observations can var from one 
-set of variables to the other, but the observations should be the same in all the data sets
+The number and/or nature of the variables used to describe the observations can vary from one 
+set of variables to the other, but the observations should be the same in all the data sets.
 
 The goals of MFA:
 
 - to analyze several data sets measured on the same observations
 - to provide a set of common factor scores i.e compromise factor scores
 - to project each of the original data sets onto the compromise to analyze
-  communalities and discrepancies
+  commonalities and discrepancies
 
 ## The Different Steps of MFA: 
 
@@ -56,7 +56,7 @@ The goals of MFA:
 ## Step 3
 
 - After the weights have been collected, they are used to compute the GSVD
-  under the contraints provided by M (masses for the observations) and A (squared
+  under the constraints provided by M (masses for the observations) and A (squared
   singular value derived weights for the 10 tables)
 
 - The NormalizeAndGSVD function then computes the generalized PCA
@@ -78,14 +78,14 @@ The goals of MFA:
 ## Step 6
 
 - In MFA, the importance of a dimension is reflected by its eigenvalue which indicates
-  how much of the total inertia of the data is exmplained by that component
+  how much of the total inertia of the data is explained by that component
 
 - We need to evaluate how much an observation, variable, or a whole table contribute
   to the inertia extracted by a component
 
 - Contribution of a table is the sum of the contributions of its variables
 
-- ContribObs, ContribVar, and ContribTable functions are used to computer the 
+- ContribObs, ContribVar, and ContribTable functions are used to compute the 
   contributions of an observation, variable, and table to a dimension
 
 ## Step 7
