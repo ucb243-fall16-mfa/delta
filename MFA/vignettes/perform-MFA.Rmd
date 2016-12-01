@@ -17,6 +17,7 @@ To perform MFA, use the `mfa` function:
 library(MFA)
 result <- mfa(wines, sets)
 ```
+
 Here `wines` is a data set included in the package, and `sets` is a
 list of integer vectors representing the subtables in the `wines` data set.
 
@@ -32,14 +33,11 @@ EigSummary(result)
 ```
 
 ## Plotting the results
-There are 3 functions that can plot the result.
-```{r, fig.width=7, fig.height=7}
-PlotFactorScores(result, group = wines$country, label = wines$ID)
-PlotPartialFactorScores(result, 1, group = wines$country, label = wines$ID,
-                        dim = c(2, 3))
-PlotLoadings(result)
-```
-The `PlotFactorScores` function plot the factor scores of the result
+There are 4 functions that can be used to visualise the result.
+
+The `PlotEig` function gives a bar chart of the eigenvalues.
+
+The `PlotFactorScores` function plots the factor scores of the result
 from MFA. The argument `group` can be used to provide grouping
 (different colouring) on the plot.
 
@@ -49,6 +47,13 @@ more argument to specify the particular table.
 The `PlotLoadings` function plots the variable loadings. Similar to
 the other two functions, `var.group` argument can be used to provide
 grouping among variables.
+
+```{r, fig.width=7, fig.height=7}
+PlotEig(result)
+PlotFactorScores(result, group = wines$country, label = wines$ID)
+PlotPartialFactorScores(result, 1, group = wines$country, label = wines$ID, dim = c(2, 3))
+PlotLoadings(result)
+```
 
 ## Related functions
 ### Contributions
