@@ -1,0 +1,47 @@
+---
+title: "Multiple Factor Analysis"
+author: "Jigncheng Xu, Matthew Rainey, Cristian Garay, and Sai Dulla"
+date: "November 29, 2016"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Multiple Factor Analysis
+
+MFA is used when several sets of variables have been measured on the same set of observations.
+The number and/or nature of the variables used to describe the observations can var from one 
+set of variables to the other, but the observations should be the same in all the data sets
+
+The goals of MFA:
+
+- to analyze several data sets measured on the same observations
+- to provide a set of common factor scores i.e compromise factor scores
+- to project each of the original data sets onto the compromise to analyze
+  communalities and discrepancies
+
+## The Different Steps of MFA: 
+
+- Step 1: Calculate PCA of each Data Table
+- Step 2: Creating the α Weight Vector
+- Step 3: Generalized PCA of X
+- Step 4: Computing Factor Scores
+- Step 5: Computing Partial Factor Scores
+- Step 6: Determining the importance of the Tables in the Compromise
+- Step 7: Bootstrap
+
+## Step 1: With the MFA package
+- 
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+
