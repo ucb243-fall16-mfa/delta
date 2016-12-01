@@ -82,3 +82,12 @@ PlotLoadings <- function(mfa, var.group = NULL, label = NULL, dim = c(1, 2)) {
                label,
                fix.ratio = FALSE)
 }
+
+#' @title Plot Eigenvalues
+#' @param mfa an object of class "mfa"
+#' @export
+PlotEig <- function(mfa) {
+    barplot(mfa$eig,
+            main = 'Eigenvalues of dimensions',
+            names.arg = 1:length(mfa$eig))
+}
