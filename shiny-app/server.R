@@ -21,6 +21,7 @@ shinyServer(function(input, output) {
 
   ##generate the plots
   output$Plot <- renderPlot({switch(input$Choice,
+         "eig" = PlotEig(mfa.wines),
          "factor" = PlotFactorScores(mfa.wines, group = wines$country, label = wines$ID, dim = c(input$dim1, input$dim2)),
          "partial" = PlotPartialFactorScores(mfa.wines, k = input$table, group = wines$country, label = wines$ID, dim = c(input$dim1, input$dim2)),
          "loadings" = PlotLoadings(mfa.wines, var.group = assessors.variable, label = variables, dim = c(input$dim1, input$dim2)))
