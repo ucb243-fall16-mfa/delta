@@ -30,18 +30,98 @@ The goals of MFA:
 - Step 4: Computing Factor Scores
 - Step 5: Computing Partial Factor Scores
 - Step 6: Determining the importance of the Tables in the Compromise
-- Step 7: Bootstrap
+- Step 7: Contributions
+- Step 8: Bootstrap
+- Step 9: Plotting
 
-## Step 1: With the MFA package
-- 
+## Step 1
 
-```{r cars, echo = TRUE}
-summary(cars)
-```
+- The function SplitTable creates and returns a list of Matrices of the data sets
 
-## Slide with Plot
+- The NormalizeAndGSVD function takes the tables and calculates the left singular 
+  vector, singular values, and the right singular vector
 
-```{r pressure}
-plot(pressure)
-```
+- EigSummary function is used to print the singular values, eigenvalues, 
+  cumulative percentage of inertia for all the extracted components
 
+- To analyze the between-table structure the similarity between two tables needs to
+  be evaluated with Rv and Lg coefficients using the functions RV, RV_table and
+  Lv, LV_table respectively
+
+
+## Step 2
+- The NormalizeAndGSVD function also accumulates the singular value for all the
+  tables into the α Weight vector
+
+## Step 3
+
+- After the weights have been collected, they are used to compute the GSVD
+  under the contraints provided by M (masses for the observations) and A (squared
+  singular value derived weights for the 10 tables)
+
+- The NormalizeAndGSVD function then computes the generalized PCA
+
+## Step 4
+
+- The factor scores represent a compromise for the set of the 10 matrices
+
+- The factor scores can be used to plot the observations as done in standard PCA
+
+- The function mfa returns the factor scores as part of a list in an mfa object
+
+## Step 5
+
+- The partial factor scores are projects of the tables onto the compromise
+
+- The function mfa returns the partial factor scores as part of a list in an mfa object
+
+## Step 6
+
+- In MFA, the importance of a dimension is reflected by its eigenvalue which indicates
+  how much of the total inertia of the data is exmplained by that component
+
+- We need to evaluate how much an observation, variable, or a whole table contribute
+  to the inertia extracted by a component
+
+- Contribution of a table is the sum of the contributions of its variables
+
+- ContribObs, ContribVar, and ContribTable functions are used to computer the 
+  contributions of an observation, variable, and table to a dimension
+
+## Step 7
+
+- There are two ways to determine which tables play the largest role in the compromise:
+  contributions and partial inertias
+
+- The contribution of a table reflects the proportion of the variance of a dimension
+
+- The larger the contribution of a table to a component, the more important the
+  table is for that component
+
+- The function mfa returns the Loadings as part of a list in an mfa object
+
+## Step 8
+
+- To estimate the stability of the compromise factor scores, we use the bootstrap approach
+  to randomize the tables
+
+- The function BootstrapFactorScores calculates the Bootstrap Confidence Intervals, which 
+  are obtained by repeatedly sampling with replacement from the set of tables and 
+  computing new compromise factor scores.
+
+- The function BootstrapRatios calucates the Bootstrap ratios for each dimension by dividing 
+  the mean of the bootstrap estimates by their standard deviation
+  
+## Step 9
+
+- The PlotHelper uses ggplot2 to plot different scores for the data sets
+
+- CheckArg function is used to validate the plot variables
+
+- Raw Factor Scores are plotted by calling PlotRawFactorScores function 
+
+- Partial Factor Scores are plotted by calling PlotPartialFactorScores function 
+
+- Loadings are plotted by calling PlotLoadings function 
+
+- Eigen Values are plotted by calling PlotEigValues function 
