@@ -58,7 +58,7 @@ mfa <- function(data, sets, ncomp = NULL, center = TRUE, scale = TRUE) {
     var.indeces <- unlist(sets)
     data[ , var.indeces] <-
         scale(data[ , var.indeces], center, scale)
-    if (scale)
+    if (scale != FALSE)
         data[ , var.indeces] <- data[ , var.indeces] / sqrt(nrow(data) - 1)
     tables <- SplitTable(data, sets)
     gsvd <- NormalizeAndGSVD(tables)
