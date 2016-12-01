@@ -12,7 +12,8 @@ shinyUI(fluidPage(
                      label = h3("Plot Options"),
                      choices = list("Factor Scores" = "factor",
                                     "Partial Factor Scores" = "partial",
-                                    "Loadings" = "loadings"),
+                                    "Loadings" = "loadings",
+                                    "Eigenvalues" = "eig"),
                      selected = "factor"),
       ## Inputs for which Dimensions to be used
       numericInput("dim1",
