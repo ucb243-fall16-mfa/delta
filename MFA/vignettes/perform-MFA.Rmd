@@ -94,7 +94,7 @@ observation contributes by it's contributions size relative to 1/12.
 For example, the tenth wine contributes a lot to the second dimension,
 but very little to the first or third.
 
-###Contributions of a Variable to a Dimension
+### Contributions of a Variable to a Dimension
 
 The contributions of a variable tells us how much each variable
 contributes to a dimension.  To get the Contributions of a Variable,
@@ -111,7 +111,7 @@ contributes by it's contributions size relative to 1/53.  For example,
 the third variable contributes a lot to the second dimension but very
 little to the third.
 
-###Contributions of a Table to a Dimension
+### Contributions of a Table to a Dimension
 
 The contribution of a table to tells us how much all of the variables
 in a given table contribute to a dimension.  To get the Contributions
