@@ -8,8 +8,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-This vignette is about using this package to perform MFA (Multiple
-Factor Analysis), get summaries for the result, and plot the results.
+This vignette is about using this package to perform MFA (Multiple Factor Analysis), get summaries for the result, and plot the results.  MFA is used when several sets of variables have been measured on the same set of observations.
 
 ## Performing MFA
 To perform MFA, use the `mfa` function:
@@ -25,9 +24,10 @@ list of integer vectors representing the subtables in the `wines` data set.
 result
 ```
 
+result is an object of class `mfa` which is a list with several elements.  `eig` holds the eigenvalues, which measure the importance of each dimension (or component) by describing how much of the inertia of the data is explained by that dimension.  The `factor.scores` is a matrix that represents a compromise for the tables, and describe the observations.  The `partial.factor.scores` are the same, but only represent a single table.  The `loadings` holds a matrix that describes the individual variables.
+
 ## Summaries of the eigenvalues
-To get the summaries of eigenvalues of the result, we can use the
-`EigSummary`:
+The summaries of the eigenvalues will describe how much of the inertia each eigenvaue explains.  To get the summaries of eigenvalues of the result, we can use `EigSummary`:
 ```{r}
 EigSummary(result)
 ```
@@ -58,7 +58,7 @@ PlotLoadings(result)
 ## Related functions
 ### Contributions
 
-We measure the importance of each dimension (or component) by its eigenvalue, which indicates how much of the inertia of the data is explained by that dimension.  To understand how much each observation, variable and table contributes to each dimension, we compute the contribution for each.  All of the contributions for a given dimension must add to one.
+To understand how much each observation, variable and table contributes to each dimension, we compute the contribution for each.  All of the contributions for a given dimension must add to one.
 
 With our wine data, each observation is a different wine, each table corresponds to an assessor and each variable is an assessors grade given to the wine on certain criteria. 
 
